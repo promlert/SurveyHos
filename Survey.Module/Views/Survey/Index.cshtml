@@ -1,0 +1,197 @@
+﻿<div class="row">
+    <div class="col-12">
+        <button id="btnExport" class="btn btn-sm btn-primary" role="button"><span>Export</span></button>
+        <button id="btnExportSummary" class="btn btn-sm btn-success" role="button" asp-action="ExportSummary"><span>Export Summary</span></button>
+    </div>
+</div>
+<div class="row mt-4">
+    <div class="col-1"> User </div>
+    <div class="col-3">
+        <select id="user"></select>
+    </div>
+</div>
+<div class="row mt-4">
+    <div class="col-3">
+        <input type="text" id="dteFrom" class="form-control dte" placeholder="From Date">
+        <input type="text" id="timeFrom" class="form-control time" placeholder="From Time">
+    </div>
+    <div class="col-3">
+        <input type="text" id="dteTo" class="form-control dte" placeholder="To Date">
+        <input type="text" id="timeTo" class="form-control time" placeholder="To Time">
+    </div>
+    <div class="col-3">
+        <button class="btn btn-sm btn-primary" role="button" id="btnSearch"><span>Search</span></button>
+        <button class="btn btn-sm btn-light" role="button" id="btnClear"><span>Clear</span></button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <table id="tbSurvey" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>ลำดับ</th>
+                    <th>ดี</th>
+                    <th>ปานกลาง</th>
+                    <th>ควรปรับปรุง</th>
+                    <th>จุดบริการ</th>
+                    <th>รหัสพนักงาน</th>
+                    <th>วันที่ประเมิน</th>
+                    <th>เวลาประเมิน</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <button id="btnDele" class="btn btn-danger" role="button"><span>Delete Data (-2 Month ago)</span></button>
+    </div>
+</div>
+<style asp-name="sweetalert2" asp-src="/lib/sweetalert2/sweetalert2.min.css" at="Head"></style>
+<style asp-name="flatpickr" asp-src="/lib/flatpickr/flatpickr.min.css" at="Head"></style>
+<style asp-name="datatable-css" asp-src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" debug-src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" version="4.5.2" at="Head"></style>
+<style asp-name="datatable-css" asp-src="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css" debug-src="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css" version="1.11.3" at="Head"></style>
+<script asp-name="jquery-table" asp-src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js" debug-src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js" depends-on="jQuery" version="1.11.3" at="Foot"></script>
+<script asp-name="jquery-table-b5" asp-src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js" debug-src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.js" depends-on="jQuery" version="1.11.3" at="Foot"></script>
+<script asp-name="moment-js" asp-src="/lib/moment/js/moment.min.js" version="2.18.1" at="Foot"></script>
+<script asp-name="flatpickr" asp-src="/lib/flatpickr/flatpickr.js" version="4.6.9" at="Foot"></script>
+<script asp-name="sweetalert2" asp-src="/lib/sweetalert2/sweetalert2.min.js" version="4.6.9" at="Foot"></script>
+<script at="Foot">
+                      $(function(){
+                        'use strict'
+                     var url = '@Url.Action("All", "Survey")';
+                   var  oTable =  $('#tbSurvey').DataTable( {
+                         "processing": true,
+                        "ajax": {
+                             "url": url,
+                             "dataSrc": "result"
+                        }
+                         ,
+                         "columns": [
+                             { "data": "id" },
+                               { "data": "good" },
+                                  { "data": "fair" },
+                                     { "data": "unsatisfy" },
+                                      { "data": "station" },
+                             { "data": "user" },
+                             { "data": "createDate" , render: function ( data ){
+                                 const dte = data.split('.').slice(0, -1).join('.');
+                                 return moment(dte).format('DD/MM/YYYY');
+                             }
+                             },
+                             { "data": "createDate" , render: function ( data ){
+                                 const dte = data.split('.').slice(0, -1).join('.');
+                                 return moment(dte).format('HH:mm');
+                             }
+                             }
+                         ],
+                          "order": [[ 0, "desc" ]]
+                     } );
+                     var optional_config = {
+                   // enableTime: true,
+                    dateFormat: "Y-m-d",
+                    altInput: true,
+                    altFormat: "d/m/Y"
+                }
+                var opt_time ={
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: "H:i",
+}
+                    const $dtef = $("#dteFrom").flatpickr(optional_config);
+                      const $dtet = $("#dteTo").flatpickr(optional_config);
+                       const $tmf = $("#timeFrom").flatpickr(opt_time);
+                        const $tmt = $("#timeTo").flatpickr(opt_time);
+                        $('#btnExport').on('click', function(){
+                              var tmFr ='';
+                            var tmTo ='';
+                            if($('#timeFrom').val() != '') tmFr =' '+$('#timeFrom').val();
+                            if($('#timeTo').val() != '') tmTo =' '+$('#timeTo').val();
+                              var url_export = '@Url.Action("Export", "Survey")?fromDte=';
+                               url_export +="fromDte="+$('#dteFrom').val()+tmFr;
+                               url_export +="toDte="+$('#dteTo').val()+tmTo;
+                              window.location = url_export;
+                            });
+                        $('#btnExportSummary').on('click', function(){
+                            var tmFr ='';
+                            var tmTo ='';
+                            if($('#timeFrom').val() != '') tmFr =' '+$('#timeFrom').val();
+                            if($('#timeTo').val() != '') tmTo =' '+$('#timeTo').val();
+                              var url_export = '@Url.Action("ExportSummary", "Survey")?fromDte=';
+                               url_export +="fromDte="+$('#dteFrom').val()+tmFr;
+                               url_export +="toDte="+$('#dteTo').val()+tmTo;
+                              window.location = url_export;
+                            });
+                        $('#btnSearch').on('click', function(){
+                            var tmFr ='';
+                            var tmTo ='';
+                            if($('#timeFrom').val() != '') tmFr =' '+$('#timeFrom').val();
+                                 if($('#timeTo').val() != '') tmTo =' '+$('#timeTo').val();
+
+                            var new_url =url +"?";
+
+
+                                 new_url +="fromDte="+$('#dteFrom').val()+tmFr;
+                                 new_url +="&toDte="+$('#dteTo').val()+tmTo;
+                                     new_url +="&User="+$('#user').val();
+                                     console.info(new_url);
+                                     oTable.ajax.url(new_url).load();
+                             });
+                        $('#btnClear').on('click', function(){
+                           $dtef.clear();
+                           $dtet.clear();
+                           $('#user').prop('selectedIndex', 0);
+                           oTable.ajax.url(url).load();
+                        });
+                         $('#btnDele').on('click', function(){
+
+                             Swal.fire({
+       title: 'ต้องการลบข้อมูลใช่หรือไม่?',
+          text: "หากลบข้อมูลแล้วจะไม่สามารถนำกลับมาได้!",
+     type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'ต้องการลบข้อมูล!'
+    }).then((result) => {
+      if (result) {
+            var url_del = '@Url.Action("DeleteData", "Survey")';
+            $.get(url_del, function( data ) {
+                if(data.record >0 )
+                {
+                    Swal.fire(
+                         'Deleted!',
+                        'ข้อมูลถูกลบแล้ว. จำนวน'+ data.record,
+                        'success'
+                 )
+                }
+                else{
+                    Swal.fire({
+      type: 'error',
+      title: 'ขออภัย',
+      text: 'ไม่สามารถลบข้อมูลได้!'
+    })
+                }
+
+           });
+      }
+    })
+
+                         });
+                        let dropdown = $('#user');
+
+            dropdown.empty();
+
+            dropdown.append('<option value="" >Choose User</option>');
+            dropdown.prop('selectedIndex', 0);
+
+            const url_u =  '@Url.Action("UserAll", "Survey")';
+
+            // Populate dropdown with list of provinces
+            $.getJSON(url_u, function (data) {
+              $.each(data.result, function (key, entry) {
+                dropdown.append($('<option></option>').attr('value', entry).text(entry));
+              })
+            });
+                      });
+</script>

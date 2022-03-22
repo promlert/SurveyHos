@@ -1,0 +1,32 @@
+version: '3.4'
+networks:
+  dockerapi-dev:
+    driver: bridge 
+services:
+  surveyhos.web:
+    image: surveyhosweb:lastest
+    depends_on:
+      - "postgres_image"
+    build:
+      context: .
+      dockerfile: SurveyHos.Web/Dockerfile
+    ports:
+      - "5000:5000"    
+    networks:
+      - dockerapi-dev  
+  
+  postgres_image:
+    image: postgres:9.3
+    ports:
+      - "5435"
+    restart: always
+    volumes:
+      - db_volume:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "1234"
+      POSTGRES_DB: "Survey"
+    networks:
+      - dockerapi-dev
+volumes:
+  db_volume:

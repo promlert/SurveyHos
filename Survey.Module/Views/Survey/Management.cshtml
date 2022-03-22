@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Survey.Module.Models.IpModel>
+<div class="row">
+    <div class="col-12">
+        @Html.ActionLink("เพิ่ม Station", "AddStation")
+    </div>
+</div><div class="row">
+    <div class="col-6">  
+        <table class="table">  
+    <tr>  
+  
+        <th>  
+            Station
+        </th>  
+        <th>  
+            Ip
+        </th>  
+       
+        <th></th>  
+    </tr>  
+  
+    @foreach (var item in Model)  
+    { 
+          @Html.HiddenFor(model => item.Id)  
+           <tr>  
+  
+            <td>  
+                @Html.DisplayFor(modelItem => item.Station)  
+            </td>  
+            <td>  
+                @Html.DisplayFor(modelItem => item.Ip)  
+            </td>  
+          
+            <td>  
+                @Html.ActionLink("แก้ไข", "EditStation", new { ip = item.Ip }) |  
+                @Html.ActionLink("ลบ", "DeleteStation", new { id = item.Id }, new { onclick = "return confirm('Are sure wants to delete?');" })  
+            </td>  
+        </tr>  
+    }
+    </table>
+    </div>
+</div>

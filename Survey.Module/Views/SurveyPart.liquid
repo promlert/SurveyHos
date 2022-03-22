@@ -1,0 +1,77 @@
+﻿{% if Model.Show %}
+       {% assign user = User | user_id | users_by_id %}
+    {% if user != null %}
+
+<div class="row">
+    <div class="col-4">
+      <button class="btn-blank btn"  onclick="cbGreen()"><img src="img/green.jpg" class="img-fluid h-75" alt="..."></button>
+    </div>
+    <div class="col-4">
+        <button class="btn-blank btn"  onclick="cbYellow()"><img src="img/yellow.jpg" class="img-fluid h-75" alt="..."></button>
+    </div>
+    <div class="col-4">
+       <button class="btn-blank btn" onclick="cbRed()"><img src="img/red.jpg" class="img-fluid h-75" alt="..."></button>
+    </div>
+</div>
+{% zone "Footer" %}
+<div class="row">
+    <div class="col">
+     <div class="text-start">  ชื่อ {{user.Properties.UserProfile.UserProfile.FirstName.Text}} {{user.Properties.UserProfile.UserProfile.LastName.Text}} </div>
+    </div>
+    <div class="col">
+     <div class="text-end">    จุดให้บริการ {{user.Properties.UserProfile.UserProfile.Station.Text}} </div>
+    </div>
+</div>
+{% endzone %}
+{% scriptblock at: "Foot" %} 
+   var cbGreen = function(){ PostSurvey("gb"); }
+   var cbYellow = function(){ PostSurvey("yw"); }
+   var cbRed = function(){ PostSurvey("red"); }
+   var PostSurvey = function(color)
+   {
+        var model = {
+  "id": 0,
+  "good": false,
+  "fair": false,
+  "unsatisfy": false,
+  "Station":'{{user.Properties.UserProfile.UserProfile.Station.Text}}',
+  "user": '{{user.UserName}}' ,
+  "createDate": "0001-01-01T00:00:00"
+}
+   if(color =="gb")
+       {
+         model.good =true;
+       }
+   if(color =="yw")
+       {
+         model.fair =true;
+       }
+       if(color =="red")
+       {
+         model.unsatisfy =true;
+       }
+         console.log(model);
+          $.ajax({
+             type: "POST",
+             url: "api/survey/PostSurvey",
+              data: JSON.stringify(model),  
+                contentType: "application/json; charset=utf-8",  
+                dataType: "json", 
+            }).done(function (data) {
+             Swal.fire({title:'Saved!',text: 'ขอบคุณ สำหรับคำแนะนำ!', icon: 'success', showConfirmButton: false, timer: 1500})
+          //  toastr.success('ขอบคุณ สำหรับคำแนะนำ!')
+                console.log(JSON.stringify(data));
+            });
+   }
+{% endscriptblock %} 
+{% else %}
+ <div class="row">
+  <div class="col-12"> 
+    <div class="text-center">
+    <h1 class="display-4">กรุณาเข้าสู่ระบบ</h1>
+    </div>
+  </div>
+ </div>
+
+{% endif %} 
+{% endif %}

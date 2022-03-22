@@ -1,0 +1,242 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <UserSecretsId>87edc630-e827-4f62-9c49-1dafaf8ae008</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\lib\moment\js\moment.min.js" />
+    <Content Remove="wwwroot\lib\sweetalert2\sweetalert2.all.min.js" />
+    <Content Remove="wwwroot\lib\sweetalert2\sweetalert2.min.css" />
+    <Content Remove="wwwroot\lib\sweetalert2\sweetalert2.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="wwwroot\lib\moment\js\moment.min.js">
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\lib\sweetalert2\sweetalert2.all.min.js">
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\lib\sweetalert2\sweetalert2.min.css">
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\lib\sweetalert2\sweetalert2.min.js">
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Localization\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\lib\flatpickr\flatpickr.js" />
+    <None Include="wwwroot\lib\jquery-ui\build\release-test.js" />
+    <None Include="wwwroot\lib\jquery-ui\build\release.js" />
+    <None Include="wwwroot\lib\jquery-ui\build\tasks\build.js" />
+    <None Include="wwwroot\lib\jquery-ui\build\tasks\testswarm.js" />
+    <None Include="wwwroot\lib\jquery-ui\build\themes" />
+    <None Include="wwwroot\lib\jquery-ui\demos\autocomplete\search.php" />
+    <None Include="wwwroot\lib\jquery-ui\demos\bootstrap.js" />
+    <None Include="wwwroot\lib\jquery-ui\demos\tabs\ajax\content3-slow.php" />
+    <None Include="wwwroot\lib\jquery-ui\demos\tabs\ajax\content4-broken.php" />
+    <None Include="wwwroot\lib\jquery-ui\external\globalize\globalize.culture.de-DE.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\globalize\globalize.culture.ja-JP.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\globalize\globalize.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-1.10.0\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-1.10.1\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-1.10.2\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-1.11.0\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-1.11.1\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-1.11.2\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-1.11.3\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-1.12.0\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-1.12.1\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-1.12.2\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-1.12.3\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-1.12.4\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-1.7.0\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-1.7.1\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-1.7.2\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-1.8.0\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-1.8.1\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-1.8.2\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-1.8.3\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-1.9.0\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-1.9.1\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-2.0.0\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-2.0.1\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-2.0.2\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-2.0.3\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-2.1.0\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-2.1.1\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-2.1.2\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-2.1.3\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-2.1.4\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-2.2.0\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-2.2.1\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-2.2.2\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-2.2.3\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-2.2.4\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-3.0.0\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-3.1.0\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-custom\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-mousewheel\jquery.mousewheel.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery-simulate\jquery.simulate.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jquery\jquery.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\jshint\jshint.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\qunit-assert-classes\qunit-assert-classes.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\qunit-assert-close\qunit-assert-close.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\qunit-composite\qunit-composite.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\qunit\qunit.js" />
+    <None Include="wwwroot\lib\jquery-ui\external\requirejs\require.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\core.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\data.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\disable-selection.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\effect.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\effects\effect-blind.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\effects\effect-bounce.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\effects\effect-clip.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\effects\effect-drop.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\effects\effect-explode.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\effects\effect-fade.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\effects\effect-fold.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\effects\effect-highlight.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\effects\effect-puff.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\effects\effect-pulsate.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\effects\effect-scale.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\effects\effect-shake.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\effects\effect-size.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\effects\effect-slide.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\effects\effect-transfer.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\escape-selector.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\focusable.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\form-reset-mixin.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\form.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-af.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-ar-DZ.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-ar.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-az.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-be.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-bg.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-bs.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-ca.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-cs.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-cy-GB.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-da.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-de.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-el.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-en-AU.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-en-GB.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-en-NZ.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-eo.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-es.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-et.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-eu.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-fa.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-fi.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-fo.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-fr-CA.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-fr-CH.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-fr.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-gl.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-he.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-hi.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-hr.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-hu.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-hy.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-id.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-is.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-it-CH.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-it.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-ja.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-ka.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-kk.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-km.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-ko.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-ky.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-lb.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-lt.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-lv.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-mk.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-ml.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-ms.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-nb.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-nl-BE.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-nl.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-nn.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-no.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-pl.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-pt-BR.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-pt.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-rm.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-ro.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-ru.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-sk.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-sl.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-sq.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-sr-SR.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-sr.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-sv.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-ta.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-th.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-tj.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-tr.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-uk.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-vi.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-zh-CN.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-zh-HK.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\i18n\datepicker-zh-TW.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\ie.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\jquery-1-7.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\keycode.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\labels.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\plugin.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\position.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\safe-active-element.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\safe-blur.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\scroll-parent.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\tabbable.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\unique-id.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\version.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\widget.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\widgets\accordion.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\widgets\autocomplete.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\widgets\button.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\widgets\checkboxradio.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\widgets\controlgroup.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\widgets\datepicker.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\widgets\dialog.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\widgets\draggable.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\widgets\droppable.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\widgets\menu.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\widgets\mouse.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\widgets\progressbar.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\widgets\resizable.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\widgets\selectable.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\widgets\selectmenu.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\widgets\slider.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\widgets\sortable.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\widgets\spinner.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\widgets\tabs.js" />
+    <None Include="wwwroot\lib\jquery-ui\ui\widgets\tooltip.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Etch.OrchardCore.UserProfiles" Version="1.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
+    <PackageReference Include="OrchardCore.Logging.NLog" Version="1.2.2" />
+    <PackageReference Include="OrchardCore.Application.Cms.Targets" Version="1.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Survey.Module\Survey.Module.csproj" />
+    <ProjectReference Include="..\SurveyHos.Theme\SurveyHos.Theme.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html lang="@Orchard.CultureName()">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@RenderTitleSegments(Site.SiteName, "before")</title>
+    <link type="image/x-icon" rel="shortcut icon" href="~/SurveyHos.Theme/favicon.ico">
+    <style asp-name="surveyhos-bootstrap-oc" version="1"></style> 
+    <style asp-name="surveyhos-vendor-font-awesome" version="5.15.4"></style>
+        <style asp-name="surveyhos-sweetalert2" version="1.0.0"></style>
+     <!-- Bootstrap core JavaScript -->
+    <script asp-name="bootstrap" version="5" at="Foot"></script>
+    <script asp-name="surveyhos-vendor-jquery" version="3.4.1" at="Foot"></script>
+    <script asp-name="surveyhos-sweetalert2" version="1.0.0" at="Foot"></script>
+    <resources type="Meta" />
+    <resources type="HeadLink" />
+    <resources type="Stylesheet" />
+    <resources type="HeadScript" />
+    @await RenderSectionAsync("HeadMeta", required: false)
+</head>
+<body dir="@Orchard.CultureDir()">
+    <nav class="navbar navbar-expand-lg  navbar-light bg-light fixed-top">
+        <div class="container">
+            <shape type="Branding" />
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar" aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar">
+                <menu alias="alias:main-menu" cache-id="main-menu" cache-fixed-duration="00:05:00" cache-tag="alias:main-menu" />
+                <shape type="LoginMenu" />
+            </div>
+        </div>
+    </nav>
+    @await RenderSectionAsync("Header", required: false)
+      <main class="container">
+        @await RenderSectionAsync("Messages", required: false)
+        @await RenderBodyAsync()
+    </main>
+    @if (IsSectionDefined("Footer"))
+    {
+        <footer>
+
+            <div class="container-fluid">
+               
+                @await RenderSectionAsync("Footer", required: false)
+            </div>
+        </footer>
+    }
+    <resources type="FootScript" />
+    <script>
+       $(document).ready(function(){
+       if( $('.form-group.custom-control.custom-checkbox').length >0)
+       {
+           $('.form-group.custom-control.custom-checkbox').addClass('d-none');
+       }
+
+       $("label[for='UserName']").text(function(index, text) { 
+            return text.replace('Username or email address', 'ชื่อผู้ใช้งาน'); 
+        });
+        $("a.label-link").text(function(index, text) { 
+            return text.replace('Forgot your password?', 'ลืมรหัสผ่านของคุณ?'); 
+        });
+        setInterval(function () {
+            var t ="23:00";
+            var now = moment();
+            var date = moment(now.format("MM-DD-YYYY ")+t,"MM-DD-YYYY HH:mm");
+            if (now > date)
+            {
+                console.info("date " +date);
+                console.info("now " +date);
+                $('#logout').submit();
+            }
+            else
+            {
+                console.info("date " +date);
+                console.info("now " +date);
+            }
+        }, 10000);
+       });
+    </script>
+</body>
+</html>
