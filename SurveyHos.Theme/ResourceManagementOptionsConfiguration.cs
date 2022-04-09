@@ -49,14 +49,14 @@ namespace SurveyHos.Theme
                        .SetUrl("~/SurveyHos.Theme/lib/datatables-bs4/css/dataTables.bootstrap4.min.css", "~/SurveyHos.Theme/lib/datatables-bs4/css/dataTables.bootstrap4.css")
                        .SetVersion("1.10");
 
-            _manifest
-                      .DefineStyle("surveyhos-toastr")
-                      .SetUrl("~/SurveyHos.Theme/lib/toastr/toastr.min.css", "~/SurveyHos.Theme/lib/toastr/toastr.css")
-                      .SetVersion("1.0.0");
-            _manifest
-                    .DefineScript("surveyhos-toastr")
-                    .SetUrl("~/SurveyHos.Theme/lib/toastr/toastr.min.js", "~/SurveyHos.Theme/lib/toastr/toastr.js")
-                    .SetVersion("1.0.0");
+            //_manifest
+            //          .DefineStyle("surveyhos-toastr")
+            //          .SetUrl("~/SurveyHos.Theme/lib/toastr/toastr.min.css", "~/SurveyHos.Theme/lib/toastr/toastr.css")
+            //          .SetVersion("1.0.0");
+            //_manifest
+            //        .DefineScript("surveyhos-toastr")
+            //        .SetUrl("~/SurveyHos.Theme/lib/toastr/toastr.min.js", "~/SurveyHos.Theme/lib/toastr/toastr.js")
+            //        .SetVersion("1.0.0");
             _manifest
                    .DefineStyle("surveyhos-sweetalert2")
                    .SetUrl("~/SurveyHos.Theme/lib/sweetalert2/sweetalert2.min.css", "~/SurveyHos.Theme/lib/sweetalert2/sweetalert2.min.css")

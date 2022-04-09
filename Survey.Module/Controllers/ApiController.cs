@@ -42,7 +42,7 @@ namespace Survey.Module.Controllers
             {
                 _session.Save(new SurveyModel { CreateDate = System.DateTime.Now, Fair = model.Fair, Good = model.Good, Unsatisfy = model.Unsatisfy, Station = model.Station, User = model.User });
             }
-            return Json(new { status = true, result = "Send Success!", model });
+            return Json(new { status = true, result = "Send Success!" });
             //}
             //catch (System.Exception ex)
             //{

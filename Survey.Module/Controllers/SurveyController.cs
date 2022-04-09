@@ -125,9 +125,11 @@ namespace Survey.Module.Controllers
             DateTime? ToDate = string.IsNullOrEmpty(toDte) ? null : DateTime.ParseExact(toDte, "yyyy-MM-dd HH:mm", null);
 
             var surveyQuery = _session.Query<SurveyModel, SurveyIndex>();
-         //  var dataList = await surveyQuery.ListAsync();
-         //  if (FromDate != null & FromDate.HasValue)
-             var   dataList = await surveyQuery.Where(x => x.CreateDate >= FromDate.Value && x.CreateDate <= ToDate.Value).ListAsync();
+           var dataList = await surveyQuery.ListAsync();
+           if (FromDate != null & FromDate.HasValue )
+               dataList = dataList.Where(x => x.CreateDate >= FromDate.Value);
+            if (ToDate != null & ToDate.HasValue)
+                dataList = dataList.Where(x => x.CreateDate <= ToDate.Value);
             if (User != null) dataList = dataList.Where(x => x.User == User);
             return Json(new { result = dataList });
         }
