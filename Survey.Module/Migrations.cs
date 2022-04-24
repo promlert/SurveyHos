@@ -28,6 +28,7 @@ namespace Survey.Module
                 table.Column<Boolean>(nameof(SurveyIndex.Fair));
                 table.Column<Boolean>(nameof(SurveyIndex.Unsatisfy));
                 table.Column<string>(nameof(SurveyIndex.Station));
+                table.Column<string>(nameof(SurveyIndex.Ip));
                 table.Column<string>(nameof(SurveyIndex.User));
                 table.Column<DateTime>(nameof(SurveyIndex.CreateDate));
             });
@@ -41,6 +42,7 @@ namespace Survey.Module
                 table.AddColumn<Boolean>(nameof(SurveyIndex.Fair));
                 table.AddColumn<Boolean>(nameof(SurveyIndex.Unsatisfy));
                 table.AddColumn<string>(nameof(SurveyIndex.Station));
+                table.AddColumn<string>(nameof(SurveyIndex.Ip));
                 table.AddColumn<string>(nameof(SurveyIndex.User));
                 table.AddColumn<DateTime>(nameof(SurveyIndex.CreateDate));
             });

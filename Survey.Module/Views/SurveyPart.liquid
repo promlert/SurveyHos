@@ -24,6 +24,7 @@
 </div>
 {% endzone %}
 {% scriptblock at: "Foot" %} 
+ 
    var cbGreen = function(){ PostSurvey("gb"); }
    var cbYellow = function(){ PostSurvey("yw"); }
    var cbRed = function(){ PostSurvey("red"); }
@@ -58,7 +59,7 @@
               contentType: "application/json; charset=utf-8",  
             //    dataType: "json", 
             }).done(function () {
-             Swal.fire({title:'Saved!',text: 'ขอบคุณ สำหรับคำแนะนำ!', icon: 'success', showConfirmButton: false, timer: 1500})
+             Swal.fire({title:'Saved!',text: 'ขอบคุณ สำหรับคำแนะนำ!', type: 'success', showConfirmButton: false, timer: 1500})
           //  toastr.success('ขอบคุณ สำหรับคำแนะนำ!')
          //       console.log(JSON.stringify(data));
             })
@@ -66,6 +67,17 @@
            alert( "error" );
               });
    }
+
+   var getClient = function()
+   {
+     $.ajax({
+             type: "GET",
+             url: "api/survey/IpClient"
+            }).done(function (data) {
+             console.log(data);
+      });
+   }
+     getClient();
 {% endscriptblock %} 
 {% else %}
  <div class="row">

@@ -90,6 +90,7 @@ namespace Survey.Module.Controllers
         [HttpGet]
         public string IpClient()
         {
+           // var user = User.Identity.Name;
             var ip = HttpContext.Connection.RemoteIpAddress;
             return ip.ToString();
         }

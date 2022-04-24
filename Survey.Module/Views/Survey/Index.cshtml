@@ -47,15 +47,15 @@
         <button id="btnDele" class="btn btn-danger" role="button"><span>Delete Data (-2 Month ago)</span></button>
     </div>
 </div>
-<style asp-name="sweetalert2" asp-src="/lib/sweetalert2/sweetalert2.min.css" at="Head"></style>
-<style asp-name="flatpickr" asp-src="/lib/flatpickr/flatpickr.min.css" at="Head"></style>
+<style asp-name="sweetalert2" asp-src="~/lib/sweetalert2/sweetalert2.min.css" at="Head"></style>
+<style asp-name="flatpickr" asp-src="~/lib/flatpickr/flatpickr.min.css" at="Head"></style>
 <style asp-name="datatable-css" asp-src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" debug-src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" version="4.5.2" at="Head"></style>
 <style asp-name="datatable-css" asp-src="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css" debug-src="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css" version="1.11.3" at="Head"></style>
 <script asp-name="jquery-table" asp-src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js" debug-src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js" depends-on="jQuery" version="1.11.3" at="Foot"></script>
 <script asp-name="jquery-table-b5" asp-src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js" debug-src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.js" depends-on="jQuery" version="1.11.3" at="Foot"></script>
-<script asp-name="moment-js" asp-src="/lib/moment/js/moment.min.js" version="2.18.1" at="Foot"></script>
-<script asp-name="flatpickr" asp-src="/lib/flatpickr/flatpickr.js" version="4.6.9" at="Foot"></script>
-<script asp-name="sweetalert2" asp-src="/lib/sweetalert2/sweetalert2.min.js" version="4.6.9" at="Foot"></script>
+<script asp-name="moment-js" asp-src="~/lib/moment/js/moment.min.js" version="2.18.1" at="Foot"></script>
+<script asp-name="flatpickr" asp-src="~/lib/flatpickr/flatpickr.js" version="4.6.9" at="Foot"></script>
+<script asp-name="sweetalert2" asp-src="~/lib/sweetalert2/sweetalert2.min.js" version="4.6.9" at="Foot"></script>
 <script at="Foot">
                       $(function(){
                         'use strict'
@@ -103,23 +103,29 @@
                        const $tmf = $("#timeFrom").flatpickr(opt_time);
                         const $tmt = $("#timeTo").flatpickr(opt_time);
                         $('#btnExport').on('click', function(){
-                              var tmFr ='';
-                            var tmTo ='';
-                            if($('#timeFrom').val() != '') tmFr =' '+$('#timeFrom').val();
-                            if($('#timeTo').val() != '') tmTo =' '+$('#timeTo').val();
-                              var url_export = '@Url.Action("Export", "Survey")?fromDte=';
-                               url_export +="fromDte="+$('#dteFrom').val()+tmFr;
-                               url_export +="toDte="+$('#dteTo').val()+tmTo;
+                            //  var tmFr ='';
+                            //var tmTo ='';
+                            //if($('#timeFrom').val() != '') tmFr =' '+$('#timeFrom').val();
+                            //if($('#timeTo').val() != '') tmTo =' '+$('#timeTo').val();
+                            //   url_export +="fromDte="+$('#dteFrom').val()+tmFr;
+                            //   url_export +="&toDte="+$('#dteTo').val()+tmTo;
+                               var url_export = '@Url.Action("Export", "Survey")?';
+                               url_export +="fromDte="+$('#dteFrom').val();
+                               url_export +="&fromTm="+$('#timeFrom').val();
+                               url_export +="&toDte="+$('#dteTo').val();
+                               url_export +="&toTm="+$('#timeTo').val();
                               window.location = url_export;
                             });
                         $('#btnExportSummary').on('click', function(){
-                            var tmFr ='';
-                            var tmTo ='';
-                            if($('#timeFrom').val() != '') tmFr =' '+$('#timeFrom').val();
-                            if($('#timeTo').val() != '') tmTo =' '+$('#timeTo').val();
-                              var url_export = '@Url.Action("ExportSummary", "Survey")?fromDte=';
-                               url_export +="fromDte="+$('#dteFrom').val()+tmFr;
-                               url_export +="toDte="+$('#dteTo').val()+tmTo;
+                            //var tmFr ='';
+                            //var tmTo ='';
+                            //if($('#timeFrom').val() != ''){ tmFr =' '+$('#timeFrom').val();}
+                            //if($('#timeTo').val() != '') tmTo =' '+$('#timeTo').val();
+                              var url_export = '@Url.Action("ExportSummary", "Survey")?';
+                               url_export +="fromDte="+$('#dteFrom').val();
+                               url_export +="&fromTm="+$('#timeFrom').val();
+                               url_export +="&toDte="+$('#dteTo').val();
+                               url_export +="&toTm="+$('#timeTo').val();
                               window.location = url_export;
                             });
                         $('#btnSearch').on('click', function(){
@@ -140,6 +146,8 @@
                         $('#btnClear').on('click', function(){
                            $dtef.clear();
                            $dtet.clear();
+                           $tmf.clear();
+                           $tmt.clear();
                            $('#user').prop('selectedIndex', 0);
                            oTable.ajax.url(url).load();
                         });

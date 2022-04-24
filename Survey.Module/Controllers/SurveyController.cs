@@ -117,13 +117,25 @@ namespace Survey.Module.Controllers
                 return View();
             }
         }
-        public async Task<ActionResult> All(string fromDte, string toDte, string User)
+        public async Task<ActionResult> All(string fromDte, string toDte,string fromTm ,string toTm, string User)
         {
             //var userService = ShellScope.Services.GetService<IUserService>();
 
-            DateTime? FromDate = string.IsNullOrEmpty(fromDte) ? null : DateTime.ParseExact(fromDte, "yyyy-MM-dd HH:mm", null);
-            DateTime? ToDate = string.IsNullOrEmpty(toDte) ? null : DateTime.ParseExact(toDte, "yyyy-MM-dd HH:mm", null);
-
+            DateTime? FromDate = string.IsNullOrEmpty(fromDte) ? null : DateTime.ParseExact(fromDte, "yyyy-MM-dd", null);
+            DateTime? ToDate = string.IsNullOrEmpty(toDte) ? null : DateTime.ParseExact(toDte, "yyyy-MM-dd", null);
+            TimeSpan time;
+            if (TimeSpan.TryParse(fromTm, out time))
+            {
+                // handle validation error
+                if(FromDate.HasValue)
+                FromDate.Value.Add(time);
+            }
+            if (TimeSpan.TryParse(toTm, out time))
+            {
+                // handle validation error
+                if (ToDate.HasValue)
+                    ToDate.Value.Add(time);
+            }
             var surveyQuery = _session.Query<SurveyModel, SurveyIndex>();
            var dataList = await surveyQuery.ListAsync();
            if (FromDate != null & FromDate.HasValue )
@@ -134,11 +146,25 @@ namespace Survey.Module.Controllers
             return Json(new { result = dataList });
         }
 
-        public async Task<ActionResult> Export(string fromDte, string toDte, string User)
+        public async Task<ActionResult> Export(string fromDte, string toDte, string fromTm, string toTm, string User)
         {
-            DateTime? FromDate = string.IsNullOrEmpty(fromDte) ? null : DateTime.ParseExact(fromDte, "yyyy-MM-dd HH:mm", null);
-            DateTime? ToDate = string.IsNullOrEmpty(toDte) ? null : DateTime.ParseExact(toDte, "yyyy-MM-dd HH:mm", null);
+            //var userService = ShellScope.Services.GetService<IUserService>();
 
+            DateTime? FromDate = string.IsNullOrEmpty(fromDte) ? null : DateTime.ParseExact(fromDte, "yyyy-MM-dd", null);
+            DateTime? ToDate = string.IsNullOrEmpty(toDte) ? null : DateTime.ParseExact(toDte, "yyyy-MM-dd", null);
+            TimeSpan time;
+            if (TimeSpan.TryParse(fromTm, out time))
+            {
+                // handle validation error
+                if (FromDate.HasValue)
+                    FromDate.Value.Add(time);
+            }
+            if (TimeSpan.TryParse(toTm, out time))
+            {
+                // handle validation error
+                if (ToDate.HasValue)
+                    ToDate.Value.Add(time);
+            }
             var surveyQuery = _session.Query<SurveyModel, SurveyIndex>();
             DataTable tb = new DataTable();
             tb.Columns.Add("ลำดับ");
@@ -147,6 +173,7 @@ namespace Survey.Module.Controllers
             tb.Columns.Add("ควรปรับปรุง");
             tb.Columns.Add("จุดบริการ");
             tb.Columns.Add("รหัสพนักงาน");
+            tb.Columns.Add("วันที่ประเมิน");
             tb.Columns.Add("เวลาประเมิน");
             var dataList = await surveyQuery.ListAsync();
             if (FromDate != null)
@@ -165,17 +192,31 @@ namespace Survey.Module.Controllers
                 rw[3] = item.Unsatisfy;
                 rw[4] = item.User;
                 rw[5] = item.Station;
-                rw[6] = item.CreateDate.ToString("dd/MM/yyyy HH:mm");
+           
+                rw[6] = item.CreateDate.ToString("dd/MM/yyyy");
+                rw[7] = item.CreateDate.ToString("HH:mm");
                 tb.Rows.Add(rw);
             }
             return File(ExcelHelper.Export(tb, "แบบสอบถาม"), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Export_" + DateTime.Now.ToString("ddMMyyyyHHmm") + ".xlsx");
         }
 
-        public async Task<ActionResult> ExportSummary(string fromDte, string toDte, string User)
+        public async Task<ActionResult> ExportSummary(string fromDte, string toDte, string fromTm, string toTm, string User)
         {
-            DateTime? FromDate = string.IsNullOrEmpty(fromDte) ? null : DateTime.ParseExact(fromDte, "yyyy-MM-dd HH:mm", null);
-            DateTime? ToDate = string.IsNullOrEmpty(toDte) ? null : DateTime.ParseExact(toDte, "yyyy-MM-dd HH:mm", null);
-
+            DateTime? FromDate = string.IsNullOrEmpty(fromDte) ? null : DateTime.ParseExact(fromDte, "yyyy-MM-dd", null);
+            DateTime? ToDate = string.IsNullOrEmpty(toDte) ? null : DateTime.ParseExact(toDte, "yyyy-MM-dd", null);
+            TimeSpan time;
+            if (TimeSpan.TryParse(fromTm, out time))
+            {
+                // handle validation error
+                if (FromDate.HasValue)
+                    FromDate.Value.Add(time);
+            }
+            if (TimeSpan.TryParse(toTm, out time))
+            {
+                // handle validation error
+                if (ToDate.HasValue)
+                    ToDate.Value.Add(time);
+            }
             var surveyQuery = _session.Query<SurveyModel, SurveyIndex>();
 
             try
