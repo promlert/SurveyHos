@@ -32,7 +32,7 @@
      <div class="text-start">  ชื่อ {{user.Properties.UserProfile.UserProfile.FirstName.Text}} {{user.Properties.UserProfile.UserProfile.LastName.Text}} </div>
     </div>
     <div class="col">
-     <div class="text-end">    จุดให้บริการ <span> </span> <span id="ip"> </span> </div>
+     <div class="text-end">    จุดให้บริการ <span id="station"> </span>( <span id="ip"> </span>) </div>
     </div>
 </div>
 {% endzone %}
@@ -90,6 +90,8 @@
             }).done(function (data) {
             ip = data;
              console.log(data);
+             $("#ip").html(ip);
+               $("#station").html("Station A");
       });
    }
      getClient();
