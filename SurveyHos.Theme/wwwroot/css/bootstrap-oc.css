@@ -11316,3 +11316,47 @@ body > footer {
 body > .container {
   padding: 60px 15px 0;
 }
+.limith {
+    height: 65vh;
+    background-color: bisque;
+}
+
+.fullh {
+    height: 90vh;
+}
+
+.mycusdiv {
+    height: 30vh;
+    width: 30vh;
+    display: inline-block;
+    border:none;
+}
+
+    .mycusdiv > img {
+        width: 100%;
+        height: auto;
+    }
+
+.cusheight {
+    height: 45vh;
+}
+
+.mycustomtextBlock {
+    width: 100%;
+    height: 10vh;
+    background-color: blanchedalmond;
+    display: inline-block;
+    text-align: center;
+    padding-top: 10px;
+}
+
+@media only screen and (max-width: 580px) {
+
+    .mycusdiv {
+        width: 40vh;
+        height: 40vh;
+        display: inline-block;
+    }
+}
+
+

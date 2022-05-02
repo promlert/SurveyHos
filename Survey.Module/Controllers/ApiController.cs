@@ -40,7 +40,7 @@ namespace Survey.Module.Controllers
             //{
             if (model.User != null)
             {
-                _session.Save(new SurveyModel { CreateDate = System.DateTime.Now, Fair = model.Fair, Good = model.Good, Unsatisfy = model.Unsatisfy, Station = model.Station, User = model.User });
+                _session.Save(new SurveyModel { CreateDate = System.DateTime.Now, Fair = model.Fair, Good = model.Good, Unsatisfy = model.Unsatisfy, Station = model.Station,Ip = model.Ip, User = model.User });
             }
             return Json(new { status = true, result = "Send Success!" });
             //}
@@ -88,6 +88,7 @@ namespace Survey.Module.Controllers
             return new ObjectResult(contentItem);
         }
         [HttpGet]
+        [Authorize]
         public string IpClient()
         {
            // var user = User.Identity.Name;

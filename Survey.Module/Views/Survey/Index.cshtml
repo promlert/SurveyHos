@@ -74,14 +74,17 @@
                                      { "data": "unsatisfy" },
                                       { "data": "station" },
                              { "data": "user" },
-                             { "data": "createDate" , render: function ( data ){
+                             { "data": "createDate" , render: function ( data , type, row){
                                  const dte = data.split('.').slice(0, -1).join('.');
-                                 return moment(dte).format('DD/MM/YYYY');
+                                // console.info(dte +' ' +moment(dte).format('DD/MM/YYYY'));
+                                 return moment(dte).utcOffset("07:00").format('DD/MM/YYYY');
                              }
                              },
-                             { "data": "createDate" , render: function ( data ){
+                             { "data": "createDate" , render: function ( data , type, row){
                                  const dte = data.split('.').slice(0, -1).join('.');
-                                 return moment(dte).format('HH:mm');
+                                   console.info(dte  +' ' +moment(dte).format('HH:mm')+ ' '+  row['id']+ ' '+ moment.utc(dte).utcOffset(7 * 60).format('HH:mm'));
+                              //         console.info(dte  +' ' +moment(dte).utcOffset(7).format('hh:mm'));
+                                 return moment.utc(dte).utcOffset(7 * 60).format('HH:mm');
                              }
                              }
                          ],
@@ -129,19 +132,23 @@
                               window.location = url_export;
                             });
                         $('#btnSearch').on('click', function(){
-                            var tmFr ='';
-                            var tmTo ='';
-                            if($('#timeFrom').val() != '') tmFr =' '+$('#timeFrom').val();
-                                 if($('#timeTo').val() != '') tmTo =' '+$('#timeTo').val();
+                            //var tmFr ='';
+                            //var tmTo ='';
+                            //if($('#timeFrom').val() != '') tmFr =' '+$('#timeFrom').val();
+                            //     if($('#timeTo').val() != '') tmTo =' '+$('#timeTo').val();
 
                             var new_url =url +"?";
 
 
-                                 new_url +="fromDte="+$('#dteFrom').val()+tmFr;
-                                 new_url +="&toDte="+$('#dteTo').val()+tmTo;
-                                     new_url +="&User="+$('#user').val();
-                                     console.info(new_url);
-                                     oTable.ajax.url(new_url).load();
+                                 //new_url +="fromDte="+$('#dteFrom').val()+tmFr;
+                                 //new_url +="&toDte="+$('#dteTo').val()+tmTo;
+                               new_url +="fromDte="+$('#dteFrom').val();
+                               new_url +="&fromTm="+$('#timeFrom').val();
+                               new_url +="&toDte="+$('#dteTo').val();
+                               new_url +="&toTm="+$('#timeTo').val();
+                               new_url +="&User="+$('#user').val();
+                               console.info(new_url);
+                               oTable.ajax.url(new_url).load();
                              });
                         $('#btnClear').on('click', function(){
                            $dtef.clear();

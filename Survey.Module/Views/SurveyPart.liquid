@@ -2,15 +2,28 @@
        {% assign user = User | user_id | users_by_id %}
     {% if user != null %}
 
-<div class="row">
-    <div class="col-4">
-      <button class="btn-blank btn"  onclick="cbGreen()"><img src="img/green.jpg" class="img-fluid h-75" alt="..."></button>
+<div class="row cusheight">
+
+    <!-- New -->
+    <div class="mycustomtextBlock">
+        <p>โปรดให้คะแนนความพึงพอใจ</p>
     </div>
-    <div class="col-4">
-        <button class="btn-blank btn"  onclick="cbYellow()"><img src="img/yellow.jpg" class="img-fluid h-75" alt="..."></button>
+   <div class="col-4">
+        <button class="mycusdiv" onclick="cbGreen()">
+            <img src="img/green.jpg" class="img-fluid h-100" alt="...">
+        </button>
     </div>
+
     <div class="col-4">
-       <button class="btn-blank btn" onclick="cbRed()"><img src="img/red.jpg" class="img-fluid h-75" alt="..."></button>
+        <button class="mycusdiv" onclick="cbGreen()">
+            <img src="img/yellow.jpg" class="img-fluid h-100" alt="...">
+        </button>
+    </div>
+
+    <div class="col-4">
+        <button class="mycusdiv" onclick="cbGreen()">
+            <img src="img/red.jpg" class="img-fluid h-100" alt="...">
+        </button>
     </div>
 </div>
 {% zone "Footer" %}
@@ -19,12 +32,12 @@
      <div class="text-start">  ชื่อ {{user.Properties.UserProfile.UserProfile.FirstName.Text}} {{user.Properties.UserProfile.UserProfile.LastName.Text}} </div>
     </div>
     <div class="col">
-     <div class="text-end">    จุดให้บริการ {{user.Properties.UserProfile.UserProfile.Station.Text}} </div>
+     <div class="text-end">    จุดให้บริการ <span> </span> <span id="ip"> </span> </div>
     </div>
 </div>
 {% endzone %}
 {% scriptblock at: "Foot" %} 
- 
+   var ip ="";
    var cbGreen = function(){ PostSurvey("gb"); }
    var cbYellow = function(){ PostSurvey("yw"); }
    var cbRed = function(){ PostSurvey("red"); }
@@ -36,6 +49,7 @@
   "fair": false,
   "unsatisfy": false,
   "Station":'{{user.Properties.UserProfile.UserProfile.Station.Text}}',
+  "Ip": ip,
   "user": '{{user.UserName}}' ,
   "createDate": "0001-01-01T00:00:00"
 }
@@ -74,6 +88,7 @@
              type: "GET",
              url: "api/survey/IpClient"
             }).done(function (data) {
+            ip = data;
              console.log(data);
       });
    }
