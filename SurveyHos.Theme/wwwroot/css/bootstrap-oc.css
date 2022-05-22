@@ -11316,50 +11316,40 @@ body > footer {
 body > .container {
   padding: 60px 15px 0;
 }
-.limith {
-    height: 65vh;
-    background-color: bisque;
-}
-
-.fullh {
-    height: 90vh;
-}
 
 .mycusdiv {
-    height: 30vh;
-    width: 30vh;
+    height: 75vh;
+    width: 100%;
     display: inline-block;
-    border:none;
-    background-color:white;
+    border: none;
+    background-color: white;
 }
 
+/*
     .mycusdiv > img {
-        width: 100%;
+        width: 75%;
         height: auto;
-    }
+    }*/
 
 .cusheight {
     height: 45vh;
 }
 
 .mycustomtextBlock {
+    display: flex;
     width: 100%;
-    height: 10vh;
+    height: 5vh;
     background-color: blanchedalmond;
-    display: inline-block;
-    text-align: center;
-    padding-top: 10px;
-    font-weight:bold;
-    font-size:20px;
+    justify-content: center;
+    /*align-items: center;*/
 }
+.navbar-custom {
+    height: 10px;
+}
+@media only screen and (max-width: 800px) {
 
-@media only screen and (max-width: 580px) {
-
-    .mycusdiv {
-        width: 40vh;
-        height: 40vh;
-        display: inline-block;
+    .navbar-brand {
+        display: block;
+        float: none;
     }
 }
-
-

@@ -13,7 +13,7 @@ namespace SurveyHos.Theme
 
             _manifest
                 .DefineStyle("surveyhos-bootstrap-oc")
-                .SetUrl("~/SurveyHos.Theme/css/bootstrap-oc.min.css", "~/SurveyHos.Theme/css/bootstrap-oc.css")
+                .SetUrl("~/SurveyHos.Theme/css/bootstrap-oc.css", "~/SurveyHos.Theme/css/bootstrap-oc.css")
                 .SetVersion("1.0.0");
             _manifest
              .DefineScript("surveyhos-vendor-jquery")

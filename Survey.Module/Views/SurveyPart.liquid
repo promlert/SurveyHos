@@ -1,29 +1,28 @@
 ﻿{% if Model.Show %}
        {% assign user = User | user_id | users_by_id %}
     {% if user != null %}
+<style>
+ .col-4{
+  height: 70vh;
+ }
+ body > .container {
+ padding: 0 15px 0;
+ }
+ body > footer{
+  height: 30px;
+  line-height:30px;
+ }
+</style>
 
 <div class="row cusheight">
-
-    <!-- New -->
-    <div class="mycustomtextBlock">
-        <p>โปรดให้คะแนนความพึงพอใจ</p>
-    </div>
-   <div class="col-4">
-        <button class="mycusdiv" onclick="cbGreen()">
-            <img src="img/green.jpg" class="img-fluid h-100" alt="...">
-        </button>
-    </div>
-
     <div class="col-4">
-        <button class="mycusdiv" onclick="cbGreen()">
-            <img src="img/yellow.jpg" class="img-fluid h-100" alt="...">
-        </button>
+       <button class="mycusdiv" onclick="cbRed()"><img src="img/red.jpg" class="img-fluid h-80" alt="..."></button>
     </div>
-
     <div class="col-4">
-        <button class="mycusdiv" onclick="cbGreen()">
-            <img src="img/red.jpg" class="img-fluid h-100" alt="...">
-        </button>
+        <button class="mycusdiv"  onclick="cbYellow()"><img src="img/yellow.jpg" class="img-fluid h-80" alt="..."></button>
+    </div>
+    <div class="col-4 ">
+      <button class="mycusdiv"  onclick="cbGreen()"><img src="img/green.jpg" class="img-fluid h-80" alt="..."></button>
     </div>
 </div>
 {% zone "Footer" %}
@@ -38,6 +37,7 @@
 {% endzone %}
 {% scriptblock at: "Foot" %} 
    var ip ="";
+   var station =""; 
    var cbGreen = function(){ PostSurvey("gb"); }
    var cbYellow = function(){ PostSurvey("yw"); }
    var cbRed = function(){ PostSurvey("red"); }
@@ -48,7 +48,7 @@
   "good": false,
   "fair": false,
   "unsatisfy": false,
-  "Station":'{{user.Properties.UserProfile.UserProfile.Station.Text}}',
+  "Station":'1',
   "Ip": ip,
   "user": '{{user.UserName}}' ,
   "createDate": "0001-01-01T00:00:00"
@@ -81,20 +81,36 @@
            alert( "error" );
               });
    }
-
+   var getStationList = function()
+   {
+        $.ajax({
+             type: "GET",
+             url: "api/survey/GetStation"
+            }).done(function (data) {
+             const jsObject = data.station;
+             const  filteredResult = jsObject.find((e) => e.ip == ip);
+              console.info(filteredResult);
+              if(filteredResult)
+              {
+               station = filteredResult.station;
+               $("#station").html(station);
+             }
+      });
+   }
    var getClient = function()
    {
      $.ajax({
              type: "GET",
              url: "api/survey/IpClient"
             }).done(function (data) {
-            ip = data;
+             ip = data;
              console.log(data);
              $("#ip").html(ip);
-               $("#station").html("Station A");
+             getStationList();
+          
       });
    }
-     getClient();
+   getClient();
 {% endscriptblock %} 
 {% else %}
  <div class="row">

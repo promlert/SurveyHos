@@ -82,7 +82,7 @@
                              },
                              { "data": "createDate" , render: function ( data , type, row){
                                  const dte = data.split('.').slice(0, -1).join('.');
-                                   console.info(dte  +' ' +moment(dte).format('HH:mm')+ ' '+  row['id']+ ' '+ moment.utc(dte).utcOffset(7 * 60).format('HH:mm'));
+                                 //  console.info(dte  +' ' +moment(dte).format('HH:mm')+ ' '+  row['id']+ ' '+ moment.utc(dte).utcOffset(7 * 60).format('HH:mm'));
                               //         console.info(dte  +' ' +moment(dte).utcOffset(7).format('hh:mm'));
                                  return moment.utc(dte).utcOffset(7 * 60).format('HH:mm');
                              }

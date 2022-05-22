@@ -124,17 +124,18 @@ namespace Survey.Module.Controllers
             DateTime? FromDate = string.IsNullOrEmpty(fromDte) ? null : DateTime.ParseExact(fromDte, "yyyy-MM-dd", null);
             DateTime? ToDate = string.IsNullOrEmpty(toDte) ? null : DateTime.ParseExact(toDte, "yyyy-MM-dd", null);
             TimeSpan time;
+            TimeSpan timeTo;
             if (TimeSpan.TryParse(fromTm, out time))
             {
                 // handle validation error
                 if(FromDate.HasValue)
-                FromDate.Value.Add(time);
+                    FromDate = FromDate.Value.Add(time);
             }
-            if (TimeSpan.TryParse(toTm, out time))
+            if (TimeSpan.TryParse(toTm, out timeTo))
             {
                 // handle validation error
                 if (ToDate.HasValue)
-                    ToDate.Value.Add(time);
+                    ToDate = ToDate.Value.Add(timeTo);
             }
             var surveyQuery = _session.Query<SurveyModel, SurveyIndex>();
            var dataList = await surveyQuery.ListAsync();
@@ -153,17 +154,18 @@ namespace Survey.Module.Controllers
             DateTime? FromDate = string.IsNullOrEmpty(fromDte) ? null : DateTime.ParseExact(fromDte, "yyyy-MM-dd", null);
             DateTime? ToDate = string.IsNullOrEmpty(toDte) ? null : DateTime.ParseExact(toDte, "yyyy-MM-dd", null);
             TimeSpan time;
+            TimeSpan timeTo;
             if (TimeSpan.TryParse(fromTm, out time))
             {
                 // handle validation error
                 if (FromDate.HasValue)
-                    FromDate.Value.Add(time);
+                    FromDate = FromDate.Value.Add(time);
             }
-            if (TimeSpan.TryParse(toTm, out time))
+            if (TimeSpan.TryParse(toTm, out timeTo))
             {
                 // handle validation error
                 if (ToDate.HasValue)
-                    ToDate.Value.Add(time);
+                    ToDate = ToDate.Value.Add(timeTo);
             }
             var surveyQuery = _session.Query<SurveyModel, SurveyIndex>();
             DataTable tb = new DataTable();
@@ -173,7 +175,7 @@ namespace Survey.Module.Controllers
             tb.Columns.Add("ควรปรับปรุง");
             tb.Columns.Add("จุดบริการ");
             tb.Columns.Add("รหัสพนักงาน");
-            tb.Columns.Add("วันที่ประเมิน");
+            tb.Columns.Add("วันที่ประเมิน",typeof(DateTime));
             tb.Columns.Add("เวลาประเมิน");
             var dataList = await surveyQuery.ListAsync();
             if (FromDate != null)
@@ -190,10 +192,9 @@ namespace Survey.Module.Controllers
                 rw[1] = item.Good;
                 rw[2] = item.Fair;
                 rw[3] = item.Unsatisfy;
-                rw[4] = item.User;
-                rw[5] = item.Station;
-           
-                rw[6] = item.CreateDate.ToString("dd/MM/yyyy");
+                rw[4] = item.Station;
+                rw[5] = item.User;
+                rw[6] = item.CreateDate.Date;
                 rw[7] = item.CreateDate.ToString("HH:mm");
                 tb.Rows.Add(rw);
             }
@@ -205,17 +206,18 @@ namespace Survey.Module.Controllers
             DateTime? FromDate = string.IsNullOrEmpty(fromDte) ? null : DateTime.ParseExact(fromDte, "yyyy-MM-dd", null);
             DateTime? ToDate = string.IsNullOrEmpty(toDte) ? null : DateTime.ParseExact(toDte, "yyyy-MM-dd", null);
             TimeSpan time;
+            TimeSpan timeTo;
             if (TimeSpan.TryParse(fromTm, out time))
             {
                 // handle validation error
                 if (FromDate.HasValue)
-                    FromDate.Value.Add(time);
+                    FromDate = FromDate.Value.Add(time);
             }
-            if (TimeSpan.TryParse(toTm, out time))
+            if (TimeSpan.TryParse(toTm, out timeTo))
             {
                 // handle validation error
                 if (ToDate.HasValue)
-                    ToDate.Value.Add(time);
+                    ToDate = ToDate.Value.Add(timeTo);
             }
             var surveyQuery = _session.Query<SurveyModel, SurveyIndex>();
 
@@ -228,7 +230,7 @@ namespace Survey.Module.Controllers
                 tb.Columns.Add("ควรปรับปรุง");
                 tb.Columns.Add("จุดบริการ");
                 tb.Columns.Add("รหัสพนักงาน");
-                tb.Columns.Add("เวลาประเมิน");
+                tb.Columns.Add("เวลาประเมิน", typeof(DateTime));
                 var dataList = await surveyQuery.ListAsync();
                 if (FromDate != null)
                     dataList = dataList.Where(x => x.CreateDate >= FromDate);
@@ -236,7 +238,7 @@ namespace Survey.Module.Controllers
                     dataList = dataList.Where(x => x.CreateDate <= ToDate);
                 if (!string.IsNullOrEmpty(User)) dataList = dataList.Where(x => x.User == User);
                 dataList = dataList.OrderByDescending(c => c.CreateDate);
-                var result = dataList.Select(x => new SurveyGroupIndex { CreateDte = x.CreateDate.ToString("dd/MM/yyyy"), Fair = x.Fair, Good = x.Good, Unsatisfy = x.Unsatisfy, User = x.User, Station = x.Station }).GroupBy(x => new { x.CreateDte, x.User, x.Station }).Select(c => new { CreateDte = c.Key.CreateDte, c.Key.User, Station = c.Key.Station, Good = c.Sum(t => t.Good ? 1 : 0), Fair = c.Sum(t => t.Fair ? 1 : 0), Unsatisfy = c.Sum(t => t.Unsatisfy ? 1 : 0) });
+                var result = dataList.Select(x => new SurveyGroupIndex { CreateDte = x.CreateDate.Date, Fair = x.Fair, Good = x.Good, Unsatisfy = x.Unsatisfy, User = x.User, Station = x.Station }).GroupBy(x => new { x.CreateDte, x.User, x.Station }).Select(c => new { CreateDte = c.Key.CreateDte, c.Key.User, Station = c.Key.Station, Good = c.Sum(t => t.Good ? 1 : 0), Fair = c.Sum(t => t.Fair ? 1 : 0), Unsatisfy = c.Sum(t => t.Unsatisfy ? 1 : 0) });
 
                 foreach (var item in result)
                 {
@@ -245,7 +247,6 @@ namespace Survey.Module.Controllers
                     rw[0] = item.Good;
                     rw[1] = item.Fair;
                     rw[2] = item.Unsatisfy;
-
                     rw[3] = item.Station;
                     rw[4] = item.User;
                     rw[5] = item.CreateDte;

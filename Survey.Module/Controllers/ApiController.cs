@@ -7,6 +7,7 @@ using OrchardCore.Contents;
 using Survey.Module.Indexes;
 using Survey.Module.Models;
 using System.Threading.Tasks;
+using System.Linq;
 using YesSql;
 using ISession = YesSql.ISession;
 
@@ -94,6 +95,15 @@ namespace Survey.Module.Controllers
            // var user = User.Identity.Name;
             var ip = HttpContext.Connection.RemoteIpAddress;
             return ip.ToString();
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> GetStation()
+        {
+            // var user = User.Identity.Name;
+            var station = await _session.Query<IpModel, IpIndex>().ListAsync();
+            return Json(new { station = station.ToArray() });
         }
     }
 }
