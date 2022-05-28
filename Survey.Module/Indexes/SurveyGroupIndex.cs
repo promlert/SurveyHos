@@ -7,6 +7,7 @@ namespace Survey.Module.Indexes
     {
         public string User { set; get; }
         public DateTime CreateDte { set; get; }
+        public string Ip { get; set; }
         public string Station { get; set; }
         public bool Good { set; get; }
         public bool Fair { get; set; }
