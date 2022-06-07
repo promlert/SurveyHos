@@ -32,7 +32,7 @@
           
             <td>  
                 @Html.ActionLink("แก้ไข", "EditStation", new { ip = item.Ip }) |  
-                @Html.ActionLink("ลบ", "DeleteStation", new { id = item.Id }, new { onclick = "return confirm('Are sure wants to delete?');" })  
+                @Html.ActionLink("ลบ", "DeleteStation", new { ip = item.Ip  }, new { onclick = "return confirm('Are sure wants to delete?');" })  
             </td>  
         </tr>  
     }

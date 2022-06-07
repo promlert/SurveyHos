@@ -3,12 +3,15 @@
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
-    <ProjectGuid>5a3dd38d-fd1b-427e-bfa0-801f3ee80963</ProjectGuid>
+    <ProjectGuid>31e9e03b-9ee7-4fb4-9c59-5d05ef81b3b5</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}</DockerServiceUrl>
     <DockerServiceName>surveyhos.web</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="docker-compose.override.yml">
+      <DependentUpon>docker-compose.yml</DependentUpon>
+    </None>
     <None Include="docker-compose.yml" />
     <None Include=".dockerignore" />
   </ItemGroup>

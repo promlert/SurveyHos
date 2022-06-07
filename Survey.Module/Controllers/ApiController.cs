@@ -36,12 +36,14 @@ namespace Survey.Module.Controllers
         [Authorize]
         public ActionResult PostSurvey(SurveyModel model)
         {
-            var ip = HttpContext.Connection.RemoteIpAddress;
+
+            System.DateTime dt = System.DateTime.Now;
+            dt = dt.AddSeconds(-dt.Second);
             //try
             //{
             if (model.User != null)
             {
-                _session.Save(new SurveyModel { CreateDate = System.DateTime.Now, Fair = model.Fair, Good = model.Good, Unsatisfy = model.Unsatisfy, Station = model.Station,Ip = model.Ip, User = model.User });
+                _session.Save(new SurveyModel { CreateDate = dt, Fair = model.Fair, Good = model.Good, Unsatisfy = model.Unsatisfy, Station = model.Station,Ip = model.Ip, User = model.User });
             }
             return Json(new { status = true, result = "Send Success!" });
             //}

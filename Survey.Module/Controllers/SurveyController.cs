@@ -117,7 +117,39 @@ namespace Survey.Module.Controllers
                 return View();
             }
         }
-        public async Task<ActionResult> All(string fromDte, string toDte,string fromTm ,string toTm, string User)
+
+        // POST: Survey/DeleStation    
+        public async Task<ActionResult> DeleteStation(string ip)
+        {
+            try
+            {
+                //if (ModelState.IsValid)
+                //{
+                var ipQuery = _session.Query<IpModel, IpIndex>();
+                if (ipQuery != null)
+                {
+                    var model = await ipQuery.Where(c => c.Ip == ip).ListAsync();
+                    if (model != null && model.Count() > 0)
+                    {
+                        _session.Delete(model.First());
+                    }
+                }
+                
+
+                //if (ipQuery.(Emp))
+                //{
+                ViewBag.Message = "Station delete successfully";
+                //}
+                //}
+
+                return RedirectToAction("Management");
+            }
+            catch(Exception ex)
+            {
+                return RedirectToAction("Management");
+            }
+        }
+        public async Task<ActionResult> All(string fromDte, string toDte, string fromTm, string toTm, string User)
         {
             //var userService = ShellScope.Services.GetService<IUserService>();
 
@@ -125,10 +157,14 @@ namespace Survey.Module.Controllers
             DateTime? ToDate = string.IsNullOrEmpty(toDte) ? null : DateTime.ParseExact(toDte, "yyyy-MM-dd", null);
             TimeSpan time;
             TimeSpan timeTo;
+            if (FromDate.HasValue)
+                FromDate = FromDate.Value.AddHours(-7);
+            if (ToDate.HasValue)
+                ToDate = ToDate.Value.AddHours(-7);
             if (TimeSpan.TryParse(fromTm, out time))
             {
                 // handle validation error
-                if(FromDate.HasValue)
+                if (FromDate.HasValue)
                     FromDate = FromDate.Value.Add(time);
             }
             if (TimeSpan.TryParse(toTm, out timeTo))
@@ -138,11 +174,21 @@ namespace Survey.Module.Controllers
                     ToDate = ToDate.Value.Add(timeTo);
             }
             var surveyQuery = _session.Query<SurveyModel, SurveyIndex>();
-           var dataList = await surveyQuery.ListAsync();
-           if (FromDate != null & FromDate.HasValue )
-               dataList = dataList.Where(x => x.CreateDate >= FromDate.Value);
-            if (ToDate != null & ToDate.HasValue)
-                dataList = dataList.Where(x => x.CreateDate <= ToDate.Value);
+            IEnumerable<SurveyModel> dataList = new List<SurveyModel>();
+            if (ToDate != null && ToDate.HasValue && FromDate != null && FromDate.HasValue)
+            {
+                dataList = await surveyQuery.Where(x => x.CreateDate <= ToDate.Value && x.CreateDate >= FromDate.Value).ListAsync();
+            }
+            else if (ToDate != null && ToDate.HasValue)
+            {
+                dataList = await surveyQuery.Where(x => x.CreateDate <= ToDate.Value).ListAsync();
+            }
+            else if (FromDate != null & FromDate.HasValue)
+                dataList = await surveyQuery.Where(x => x.CreateDate >= FromDate.Value).ListAsync();
+            else
+            {
+                dataList = await surveyQuery.ListAsync();
+            }
             if (User != null) dataList = dataList.Where(x => x.User == User);
             return Json(new { result = dataList });
         }
@@ -155,8 +201,13 @@ namespace Survey.Module.Controllers
             DateTime? ToDate = string.IsNullOrEmpty(toDte) ? null : DateTime.ParseExact(toDte, "yyyy-MM-dd", null);
             TimeSpan time;
             TimeSpan timeTo;
+            if (FromDate.HasValue)
+                FromDate = FromDate.Value.AddHours(-7);
+            if (ToDate.HasValue)
+                ToDate = ToDate.Value.AddHours(-7);
             if (TimeSpan.TryParse(fromTm, out time))
             {
+
                 // handle validation error
                 if (FromDate.HasValue)
                     FromDate = FromDate.Value.Add(time);
@@ -178,11 +229,21 @@ namespace Survey.Module.Controllers
             tb.Columns.Add("รหัสพนักงาน");
             tb.Columns.Add("วันที่ประเมิน",typeof(DateTime));
             tb.Columns.Add("เวลาประเมิน");
-            var dataList = await surveyQuery.ListAsync();
-            if (FromDate != null)
-                dataList = dataList.Where(x => x.CreateDate >= FromDate);
-            if (ToDate != null)
-                dataList = dataList.Where(x => x.CreateDate <= ToDate);
+            IEnumerable<SurveyModel> dataList = new List<SurveyModel>();
+            if (ToDate != null && ToDate.HasValue && FromDate != null && FromDate.HasValue)
+            {
+                dataList = await surveyQuery.Where(x => x.CreateDate <= ToDate.Value && x.CreateDate >= FromDate.Value).ListAsync();
+            }
+            else if (ToDate != null && ToDate.HasValue)
+            {
+                dataList = await surveyQuery.Where(x => x.CreateDate <= ToDate.Value).ListAsync();
+            }
+            else if (FromDate != null & FromDate.HasValue)
+                dataList = await surveyQuery.Where(x => x.CreateDate >= FromDate.Value).ListAsync();
+            else
+            {
+                dataList = await surveyQuery.ListAsync();
+            }
             if (User != null) dataList = dataList.Where(x => x.User == User);
             dataList = dataList.OrderByDescending(c => c.CreateDate);
         
@@ -196,8 +257,8 @@ namespace Survey.Module.Controllers
                 rw[4] = item.Station;
                 rw[5] = item.Ip;
                 rw[6] = item.User;
-                rw[7] = item.CreateDate.Date;
-                rw[8] = item.CreateDate.ToString("HH:mm");
+                rw[7] = item.CreateDate.AddHours(7).Date;
+                rw[8] = item.CreateDate.AddHours(7).ToString("HH:mm");
                 tb.Rows.Add(rw);
             }
             return File(ExcelHelper.Export(tb, "แบบสอบถาม"), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Export_" + DateTime.Now.ToString("ddMMyyyyHHmm") + ".xlsx");
@@ -209,6 +270,10 @@ namespace Survey.Module.Controllers
             DateTime? ToDate = string.IsNullOrEmpty(toDte) ? null : DateTime.ParseExact(toDte, "yyyy-MM-dd", null);
             TimeSpan time;
             TimeSpan timeTo;
+            if (FromDate.HasValue)
+                FromDate = FromDate.Value.AddHours(-7);
+            if (ToDate.HasValue)
+                ToDate = ToDate.Value.AddHours(-7);
             if (TimeSpan.TryParse(fromTm, out time))
             {
                 // handle validation error
@@ -234,11 +299,21 @@ namespace Survey.Module.Controllers
                 tb.Columns.Add("IP Address");
                 tb.Columns.Add("รหัสพนักงาน");
                 tb.Columns.Add("เวลาประเมิน", typeof(DateTime));
-                var dataList = await surveyQuery.ListAsync();
-                if (FromDate != null)
-                    dataList = dataList.Where(x => x.CreateDate >= FromDate);
-                if (ToDate != null)
-                    dataList = dataList.Where(x => x.CreateDate <= ToDate);
+                IEnumerable<SurveyModel> dataList = new List<SurveyModel>();
+                if (ToDate != null && ToDate.HasValue && FromDate != null && FromDate.HasValue)
+                {
+                    dataList = await surveyQuery.Where(x => x.CreateDate <= ToDate.Value && x.CreateDate >= FromDate.Value).ListAsync();
+                }
+                else if (ToDate != null && ToDate.HasValue)
+                {
+                    dataList = await surveyQuery.Where(x => x.CreateDate <= ToDate.Value).ListAsync();
+                }
+                else if (FromDate != null & FromDate.HasValue)
+                    dataList = await surveyQuery.Where(x => x.CreateDate >= FromDate.Value).ListAsync();
+                else
+                {
+                    dataList = await surveyQuery.ListAsync();
+                }
                 if (!string.IsNullOrEmpty(User)) dataList = dataList.Where(x => x.User == User);
                 dataList = dataList.OrderByDescending(c => c.CreateDate);
                 var result = dataList.Select(x => new SurveyGroupIndex { CreateDte = x.CreateDate.Date, Fair = x.Fair, Good = x.Good, Unsatisfy = x.Unsatisfy, User = x.User, Station = x.Station ,Ip = x.Ip}).GroupBy(x => new { x.CreateDte, x.User, x.Station,x.Ip }).Select(c => new { CreateDte = c.Key.CreateDte, c.Key.User, Station = c.Key.Station, Ip = c.Key.Ip, Good = c.Sum(t => t.Good ? 1 : 0), Fair = c.Sum(t => t.Fair ? 1 : 0), Unsatisfy = c.Sum(t => t.Unsatisfy ? 1 : 0) });
@@ -253,7 +328,7 @@ namespace Survey.Module.Controllers
                     rw[3] = item.Station;
                     rw[4] = item.Ip;
                     rw[5] = item.User;
-                    rw[6] = item.CreateDte;
+                    rw[6] = item.CreateDte.AddHours(7);
                     tb.Rows.Add(rw);
                 }
                 return File(ExcelHelper.Export(tb, "แบบสอบถาม สรุป"), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "ExportSummary_" + DateTime.Now.ToString("ddMMyyyyHHmm") + ".xlsx");
