@@ -158,9 +158,9 @@ namespace Survey.Module.Controllers
             TimeSpan time;
             TimeSpan timeTo;
             if (FromDate.HasValue)
-                FromDate = FromDate.Value.AddHours(-7);
+                FromDate = FromDate.Value;
             if (ToDate.HasValue)
-                ToDate = ToDate.Value.AddHours(-7);
+                ToDate = ToDate.Value;
             if (TimeSpan.TryParse(fromTm, out time))
             {
                 // handle validation error
@@ -202,9 +202,9 @@ namespace Survey.Module.Controllers
             TimeSpan time;
             TimeSpan timeTo;
             if (FromDate.HasValue)
-                FromDate = FromDate.Value.AddHours(-7);
+                FromDate = FromDate.Value;
             if (ToDate.HasValue)
-                ToDate = ToDate.Value.AddHours(-7);
+                ToDate = ToDate.Value;
             if (TimeSpan.TryParse(fromTm, out time))
             {
 
@@ -271,9 +271,9 @@ namespace Survey.Module.Controllers
             TimeSpan time;
             TimeSpan timeTo;
             if (FromDate.HasValue)
-                FromDate = FromDate.Value.AddHours(-7);
+                FromDate = FromDate.Value;
             if (ToDate.HasValue)
-                ToDate = ToDate.Value.AddHours(-7);
+                ToDate = ToDate.Value;
             if (TimeSpan.TryParse(fromTm, out time))
             {
                 // handle validation error
