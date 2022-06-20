@@ -78,8 +78,8 @@
                              { "data": "user" },
                              { "data": "createDate" , render: function ( data , type, row){
                                  const dte = data.split('.').slice(0, -1).join('.');
-                                // console.info(dte +' ' +moment(dte).format('DD/MM/YYYY'));
-                                 return moment(dte).utcOffset("07:00").format('DD/MM/YYYY');
+                                  console.info(moment(data).format('DD/MM/YYYY') +' ' +moment(dte).utcOffset("07:00").format('DD/MM/YYYY'));
+                                 return moment(data).format('DD/MM/YYYY');
                              }
                              },
                              { "data": "createDate" , render: function ( data , type, row){

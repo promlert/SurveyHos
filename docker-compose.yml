@@ -6,6 +6,8 @@ services:
     build:
       context: .
       dockerfile: SurveyHos.Web/Dockerfile
+    environment:
+      - TZ=Asia/Bangkok
     networks:
       - db_postgres
 networks:

@@ -196,7 +196,7 @@ namespace Survey.Module.Controllers
         public async Task<ActionResult> Export(string fromDte, string toDte, string fromTm, string toTm, string User)
         {
             //var userService = ShellScope.Services.GetService<IUserService>();
-
+            int station = 0;
             DateTime? FromDate = string.IsNullOrEmpty(fromDte) ? null : DateTime.ParseExact(fromDte, "yyyy-MM-dd", null);
             DateTime? ToDate = string.IsNullOrEmpty(toDte) ? null : DateTime.ParseExact(toDte, "yyyy-MM-dd", null);
             TimeSpan time;
@@ -224,7 +224,7 @@ namespace Survey.Module.Controllers
             tb.Columns.Add("ดี");
             tb.Columns.Add("ปานกลาง");
             tb.Columns.Add("ควรปรับปรุง");
-            tb.Columns.Add("จุดบริการ");
+            tb.Columns.Add("จุดบริการ",typeof(int));
             tb.Columns.Add("IP Address");
             tb.Columns.Add("รหัสพนักงาน");
             tb.Columns.Add("วันที่ประเมิน",typeof(DateTime));
@@ -254,7 +254,7 @@ namespace Survey.Module.Controllers
                 rw[1] = item.Good;
                 rw[2] = item.Fair;
                 rw[3] = item.Unsatisfy;
-                rw[4] = item.Station;
+                rw[4] = int.TryParse(item.Station, out station) ? station : 0;
                 rw[5] = item.Ip;
                 rw[6] = item.User;
                 rw[7] = item.CreateDate.AddHours(7).Date;
@@ -295,7 +295,7 @@ namespace Survey.Module.Controllers
                 tb.Columns.Add("ดี");
                 tb.Columns.Add("ปานกลาง");
                 tb.Columns.Add("ควรปรับปรุง");
-                tb.Columns.Add("จุดบริการ");
+                tb.Columns.Add("จุดบริการ", typeof(int));
                 tb.Columns.Add("IP Address");
                 tb.Columns.Add("รหัสพนักงาน");
                 tb.Columns.Add("เวลาประเมิน", typeof(DateTime));
@@ -316,16 +316,17 @@ namespace Survey.Module.Controllers
                 }
                 if (!string.IsNullOrEmpty(User)) dataList = dataList.Where(x => x.User == User);
                 dataList = dataList.OrderByDescending(c => c.CreateDate);
-                var result = dataList.Select(x => new SurveyGroupIndex { CreateDte = x.CreateDate.Date, Fair = x.Fair, Good = x.Good, Unsatisfy = x.Unsatisfy, User = x.User, Station = x.Station ,Ip = x.Ip}).GroupBy(x => new { x.CreateDte, x.User, x.Station,x.Ip }).Select(c => new { CreateDte = c.Key.CreateDte, c.Key.User, Station = c.Key.Station, Ip = c.Key.Ip, Good = c.Sum(t => t.Good ? 1 : 0), Fair = c.Sum(t => t.Fair ? 1 : 0), Unsatisfy = c.Sum(t => t.Unsatisfy ? 1 : 0) });
+                var result = dataList.Select(x => new SurveyGroupIndex { CreateDte = x.CreateDate.Date, Fair = x.Fair, Good = x.Good, Unsatisfy = x.Unsatisfy, User = x.User, Station = x.Station, Ip = x.Ip }).GroupBy(x => new { x.CreateDte, x.User, x.Station, x.Ip }).Select(c => new { CreateDte = c.Key.CreateDte, c.Key.User, Station = c.Key.Station, Ip = c.Key.Ip, Good = c.Sum(t => t.Good ? 1 : 0), Fair = c.Sum(t => t.Fair ? 1 : 0), Unsatisfy = c.Sum(t => t.Unsatisfy ? 1 : 0) });
 
                 foreach (var item in result)
                 {
+                    int station = 0;
                     var rw = tb.NewRow();
                     //   rw[0] = item.Id;
                     rw[0] = item.Good;
                     rw[1] = item.Fair;
                     rw[2] = item.Unsatisfy;
-                    rw[3] = item.Station;
+                    rw[4] = int.TryParse(item.Station, out station) ? station : 0;
                     rw[4] = item.Ip;
                     rw[5] = item.User;
                     rw[6] = item.CreateDte.AddHours(7);

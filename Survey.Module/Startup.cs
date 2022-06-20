@@ -17,6 +17,7 @@ using OrchardCore.Modules;
 using YesSql.Indexes;
 using Survey.Module.Provider;
 using OrchardCore.Navigation;
+using OrchardCore.Security.Permissions;
 
 namespace Survey.Module
 {
@@ -39,6 +40,7 @@ namespace Survey.Module
             services.AddSingleton<IIndexProvider, IpIndexProvider>();
             services.AddScoped<IDataMigration, Migrations>();
             services.AddScoped<IDataMigration, MigrationsIp>();
+            services.AddScoped<IPermissionProvider, Permissions>();
         }
 
         public override void Configure(IApplicationBuilder builder, IEndpointRouteBuilder routes, IServiceProvider serviceProvider)
